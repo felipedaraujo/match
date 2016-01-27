@@ -33,7 +33,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/play',
       templateUrl: 'templates/play.html',
       controller: 'PlayCtrl'
+    }).
+    state('how-to-play', {
+      url: '/how-to-play',
+      templateUrl: 'templates/how-to-play.html'
     })
+
 
   $urlRouterProvider.otherwise('/home');
 })
