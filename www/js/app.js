@@ -34,6 +34,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       templateUrl: 'templates/play.html',
       controller: 'PlayCtrl'
     }).
+    state('scores', {
+      url: '/scores',
+      templateUrl: 'templates/scores.html'
+    }).
     state('how-to-play', {
       url: '/how-to-play',
       templateUrl: 'templates/how-to-play.html'
