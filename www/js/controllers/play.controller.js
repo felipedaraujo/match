@@ -1,51 +1,16 @@
 angular.module('starter.controllers')
-  .controller('PlayCtrl', function($scope, $window, AlertService) {
+  .controller('PlayCtrl', function($scope, $window, AlertService, DeckFactory) {
     $scope.deck = [];
     $scope.table = [];
     $scope.selectedCards = [];
     $scope.totalSets = 0
     $scope.switchEnabled = false;
 
-    easyDeck = function(colors, shapes, fills) {
-      var counter = -1;
-      colors.forEach(function(color) {
-        shapes.forEach(function(shape) {
-          fills.forEach(function(fill) {
-            counter += 1;
-            var card = {id: counter, color: color, shape: shape,
-              fill: fill, shadow: 'default'};
-            addOnDeck(card);
-          })
-        })
-      })
-    }
-
-    hardDeck = function(colors, shapes, fills, repeats) {
-      var counter = -1;
-      colors.forEach(function(color) {
-        shapes.forEach(function(shape) {
-          fills.forEach(function(fill) {
-            repeats.forEach(function(repeat) {
-              counter += 1;
-              var card = {id: counter, color: color, shape: shape,
-                repeat: repeat, fill: fill, shadow: 'default'};
-              addOnDeck(card);
-            })
-          })
-        })
-      })
-    }
-
     setDeck = function (){
-      var colors = ['pink', 'yellow', 'green'];
-      var shapes = ['circle', 'square', 'triangle'];
-      var fills = ['solid', 'borded', 'striped'];
-      var repeats = [1, 2, 3];
-
       if (window.localStorage['level'] == "Hard") {
-        hardDeck(colors, shapes, fills, repeats);
+        $scope.deck = DeckFactory.hardLevel();
       } else {
-        easyDeck(colors, shapes, fills);
+        $scope.deck = DeckFactory.easyLevel();
       }
     }
 
@@ -56,10 +21,6 @@ angular.module('starter.controllers')
     getCard = function() {
       random = randomNumber();
       return card = $scope.deck[random] || getCard();
-    };
-
-    addOnDeck= function(card) {
-      $scope.deck.push(card);
     };
 
     removeFromDeck = function(card){
@@ -122,7 +83,7 @@ angular.module('starter.controllers')
           for(k = j + 1; k < $scope.table.length; k++) {
             $scope.selectedCards.push($scope.table[i], $scope.table[j], $scope.table[k]);
 
-            if (isMacth()) {
+            if (isMatch()) {
               deselectAllCards();
               return  true;
             }
@@ -134,7 +95,7 @@ angular.module('starter.controllers')
       return false;
     };
 
-    isMacth = function() {
+    isMatch = function() {
       if ((areEqual(buildArgs('color')) &&
            areEqual(buildArgs('shape')) &&
            areEqual(buildArgs('fill')) &&
@@ -261,7 +222,7 @@ angular.module('starter.controllers')
 
         if ($scope.selectedCards.length >= 3) {
 
-          if (isMacth()) {
+          if (isMath()) {
             $scope.totalSets++
 
             if ($scope.deckSize() > 0) {
