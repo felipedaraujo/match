@@ -50,4 +50,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     $urlRouterProvider.otherwise('/home');
   })
 
-angular.module('starter.controllers', ['timer', 'ngCordova'])
+angular.module('starter.services', [])
+angular.module('starter.controllers', ['timer', 'starter.services'])
