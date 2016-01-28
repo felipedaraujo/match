@@ -8,10 +8,10 @@
       <h3>Settings</h3>
     </header>
 
-    <ion-toggle ion-toggle-text ng-true-value="'Easy'" ng-false-value="'Hard'" ng-model="level" ng-click="toggleSetting('level', level)">
+    <ion-toggle toggle-class="toggle-calm-green" ng-true-value="'Easy'" ng-false-value="'Hard'" ng-model="level" ng-click="toggleSetting('level', level)">
       Level: <b>{{ level }}</b>
     </ion-toggle>
-    <ion-toggle ion-toggle-text ng-true-value="'On'" ng-false-value="'Off'" ng-model="sound" ng-click="toggleSetting('sound', sound)">
+    <ion-toggle toggle-class="toggle-calm-green" ng-true-value="'On'" ng-false-value="'Off'" ng-model="sound" ng-click="toggleSetting('sound', sound)">
       Sound: <b>{{ sound }}</b>
     </ion-toggle>
   </ion-content>
