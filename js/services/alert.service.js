@@ -1,7 +1,7 @@
 angular.module('starter.services')
   .service('AlertService', function($window) {
 
-    doesNotMatchAlert = function() {
+    this.doesNotMatch = function() {
       swal({
         title:"That is not a set.",
         confirmButtonText:"Try again",
@@ -9,9 +9,9 @@ angular.module('starter.services')
       });
     }
 
-    endGameAlert = function() {
+    this.endGame = function() {
       swal({
-        title: "You won!",
+        title: "You win!",
         type: "success",
         showCancelButton: true,
         confirmButtonText:"Play again",
@@ -25,14 +25,14 @@ angular.module('starter.services')
       });
     }
 
-    noMatchAvailableAlert = function(){
+    this.noMatchAvailable = function(){
       swal({
         title: "No match available.",
         type: "warning"
       });
     }
 
-    leaveGameAlert = function(){
+    this.leaveGame = function(){
       swal({
         title: "Quit game?",
         type: "warning",
