@@ -1,5 +1,5 @@
-angular.module('starter.controllers').
-  controller('PlayCtrl', function($scope, $window) {
+angular.module('starter.controllers')
+  .controller('PlayCtrl', function($scope, $window, AlertService) {
     $scope.deck = [];
     $scope.table = [];
     $scope.selectedCards = [];
@@ -238,37 +238,6 @@ angular.module('starter.controllers').
       return true;
     }
 
-    doesNotMatchAlert = function() {
-      swal({
-        title:"That is not a set :(",
-        confirmButtonText:"Try again",
-        type: "warning"
-      });
-    }
-
-    endGameAlert = function() {
-      swal({
-        title: "You won!",
-        type: "success",
-        showCancelButton: true,
-        confirmButtonText:"Play again",
-        cancelButtonText:"Quit"
-      }, function(isConfirm) {
-        if (isConfirm) {
-          $window.location.reload();
-        } else {
-          $window.location.href = '#/home';
-        }
-      });
-    }
-
-    noMatchAvailableAlert = function(){
-      swal({
-        title: "No match available",
-        type: "warning"
-      });
-    }
-
     $scope.init = function() {
       setDeck();
       giveCards();
@@ -330,14 +299,8 @@ angular.module('starter.controllers').
       $scope.switchEnabled = !anyMatch();
     }
 
-    $scope.leaveGameAlert = function(){
-      swal({
-        title: "Quit game?",
-        type: "warning",
-        showCancelButton: true
-      }, function() {
-        $window.location.href = '#/welcome';
-      });
+    $scope.leaveGameAlert = function() {
+      leaveGameAlert();
     }
   })
   .directive('cards', function() {
