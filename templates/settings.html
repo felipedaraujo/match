@@ -1,0 +1,18 @@
+<ion-panel>
+  <ion-header-bar>
+    <a href="#/home" class="button ion-ios-arrow-back button-clear button-dark"></a>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <header class="text-center">
+      <h1 class="home-title">TRES!</h1>
+      <h3>Settings</h3>
+    </header>
+
+    <ion-toggle ion-toggle-text ng-true-value="'Easy'" ng-false-value="'Hard'" ng-model="level" ng-click="toggleSetting('level', level)">
+      Level: <b>{{ level }}</b>
+    </ion-toggle>
+    <ion-toggle ion-toggle-text ng-true-value="'On'" ng-false-value="'Off'" ng-model="sound" ng-click="toggleSetting('sound', sound)">
+      Sound: <b>{{ sound }}</b>
+    </ion-toggle>
+  </ion-content>
+</ion-panel>

@@ -1,13 +1,9 @@
 <div id="cards">
-  <div id="card-{{card.id}}"
-       class="tres-card {{card.shadow}}"
-       data-ng-repeat="card in table track by card.id"
-       data-ng-click="selectCard(card)">
+  <div id="card-{{card.id}}" class="tres-card {{card.shadow}}"
+       ng-repeat="card in table track by card.id" ng-click="selectCard(card)">
     <div class="center-vertical">
-      <div id="icon-{{card.id}}-{{$index}}"
-           class="{{card.color}}"
-           data-ng-include="setIcon(card)"
-           data-ng-repeat="i in getNumber(card.repeat) track by $index">
+      <div id="icon-{{card.id}}-{{$index}}" class="{{card.color}}" ng-include="setIcon(card)"
+           ng-repeat="i in getNumber(card.repeat) track by $index">
       </div>
     </div>
   </div>
