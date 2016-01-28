@@ -1,5 +1,5 @@
 angular.module('starter.services')
-  .service('AlertService', function($window) {
+  .service('Alert', function($window) {
 
     this.doesNotMatch = function() {
       swal({

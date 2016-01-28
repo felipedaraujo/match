@@ -12,7 +12,7 @@ angular.module('starter.factories')
           fills.forEach(function(fill) {
             counter += 1;
             var card = {id: counter, color: color, shape: shape,
-              fill: fill, shadow: 'default'};
+              repeat: 1, fill: fill, shadow: 'default'};
             deck.push(card);
           })
         })
