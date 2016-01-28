@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['timer']).
+angular.module('starter.controllers').
   controller('PlayCtrl', function($scope, $window) {
     $scope.deck = [];
     $scope.table = [];
@@ -6,13 +6,22 @@ angular.module('starter.controllers', ['timer']).
     $scope.totalSets = 0
     $scope.switchEnabled = false;
 
-    setDeck = function (){
-      var colors = ['pink', 'yellow', 'green'];
-      var shapes = ['circle', 'square', 'triangle'];
-      var fills = ['solid', 'borded', 'striped'];
-      var repeats = [1, 2, 3];
+    easyDeck = function(colors, shapes, fills) {
       var counter = -1;
+      colors.forEach(function(color) {
+        shapes.forEach(function(shape) {
+          fills.forEach(function(fill) {
+            counter += 1;
+            var card = {id: counter, color: color, shape: shape,
+              fill: fill, shadow: 'default'};
+            addOnDeck(card);
+          })
+        })
+      })
+    }
 
+    hardDeck = function(colors, shapes, fills, repeats) {
+      var counter = -1;
       colors.forEach(function(color) {
         shapes.forEach(function(shape) {
           fills.forEach(function(fill) {
@@ -25,8 +34,20 @@ angular.module('starter.controllers', ['timer']).
           })
         })
       })
+    }
 
-    };
+    setDeck = function (){
+      var colors = ['pink', 'yellow', 'green'];
+      var shapes = ['circle', 'square', 'triangle'];
+      var fills = ['solid', 'borded', 'striped'];
+      var repeats = [1, 2, 3];
+
+      if (window.localStorage['level'] == "Hard") {
+        hardDeck(colors, shapes, fills, repeats);
+      } else {
+        easyDeck(colors, shapes, fills);
+      }
+    }
 
     randomNumber = function() {
       return Math.floor(Math.random() * $scope.deck.length);
@@ -47,7 +68,7 @@ angular.module('starter.controllers', ['timer']).
     };
 
     removeFromTable = function(){
-      $.each($scope.selectedCards, function (_, card){
+      $scope.selectedCards.forEach(function(card) {
         var index = $scope.table.indexOf(card);
         $scope.table.splice(index, 1);
       });
@@ -58,7 +79,7 @@ angular.module('starter.controllers', ['timer']).
     deselectAllCards = function(){
       $scope.selectedCards.forEach(function(card) {
         card.shadow = 'default';
-      })
+      });
 
       $scope.selectedCards = [];
     };
@@ -231,7 +252,7 @@ angular.module('starter.controllers', ['timer']).
         type: "success",
         showCancelButton: true,
         confirmButtonText:"Play again",
-        cancelButtonText:"Quit game"
+        cancelButtonText:"Quit"
       }, function(isConfirm) {
         if (isConfirm) {
           $window.location.reload();

@@ -1,15 +1,15 @@
 <ion-panel data-ng-init="init()">
   <ion-header-bar>
-    <button class="button icon-left ion-ios-refresh-empty button-clear button-dark" ng-click="switchCard()" ng-show="switchEnabled"></button>
-    <h2 class="title">0</h2>
-    <button class="button button-icon icon ion-ios-close-empty" ng-click="leaveGameAlert()"></button>
+    <button class="button button-clear button-energized button-energized ion-ios-star" ng-click="switchCard()" ng-show="switchEnabled"></button>
+    <h1 class="title">0</h1>
+    <button class="button button-icon ion-ios-close-empty" ng-click="leaveGameAlert()"></button>
   </ion-header-bar>
   <ion-content class="padding">
     <div class="button-bar">
-      <button class="button button-icon button-clear button-dark">
+      <button class="button button-clear button-dark">
         {{totalSets}} sets
       </button>
-      <button class="button button-clear button-dark ion-clock">
+      <button class="button button-icon ion-clock">
         <timer interval="1000">{{mminutes}}:{{sseconds}}</timer>
       </button>
     </div>
