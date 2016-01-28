@@ -6,5 +6,4 @@ angular.module('starter.controllers').
     $scope.toggleSetting = function(name, value) {
       window.localStorage[name] = value;
     }
-
   })

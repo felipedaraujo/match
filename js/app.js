@@ -51,4 +51,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
 
 angular.module('starter.services', [])
-angular.module('starter.controllers', ['timer', 'starter.services'])
+
+angular.module('starter.factories', [])
+
+angular.module(
+  'starter.controllers',
+  ['timer', 'starter.services', 'starter.factories']
+)
