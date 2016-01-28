@@ -2,9 +2,9 @@ angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $window, Alert, Comparator,
     DeckFactory) {
 
-    $scope.deck = [];
+    var deck = [];
+    var selectedCards = [];
     $scope.table = [];
-    $scope.selectedCards = [];
     $scope.totalSets = 0
     $scope.switchEnabled = false;
 
@@ -22,22 +22,22 @@ angular.module('starter.controllers')
     };
 
     $scope.selectCard = function(card){
-      var index = $scope.selectedCards.indexOf(card);
+      var index = selectedCards.indexOf(card);
 
-      if ($scope.selectedCards.length < 3 && index === -1) {
-        $scope.selectedCards.push(card);
+      if (selectedCards.length < 3 && index === -1) {
+        selectedCards.push(card);
 
         card.shadow = 'selected';
 
-        if ($scope.selectedCards.length >= 3) {
+        if (selectedCards.length >= 3) {
 
-          if (Comparator.isMatch($scope.selectedCards)) {
+          if (Comparator.isMatch(selectedCards)) {
             $scope.totalSets++
 
             if ($scope.deckSize() > 0) {
               replaceSelectedCards();
             } else {
-              removeFromTable($scope.selectedCards);
+              removeFromTable(selectedCards);
             }
 
           } else {
@@ -53,7 +53,7 @@ angular.module('starter.controllers')
     }
 
     $scope.deckSize = function() {
-      return $scope.deck.filter(function(value) { return value !== null }).length;
+      return deck.filter(function(value) { return value !== null }).length;
     };
 
     $scope.switchCard = function() {
@@ -62,7 +62,7 @@ angular.module('starter.controllers')
 
       $scope.table[0] = deckCard;
       removeFromDeck(deckCard);
-      $scope.deck.push(tableCard)
+      deck.push(tableCard)
 
       if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
       $scope.switchEnabled = !Comparator.anyMatch($scope.table);
@@ -74,28 +74,28 @@ angular.module('starter.controllers')
 
     setDeck = function (){
       if (window.localStorage['level'] == "Hard") {
-        $scope.deck = DeckFactory.hardLevel();
+        deck = DeckFactory.hardLevel();
       } else {
-        $scope.deck = DeckFactory.easyLevel();
+        deck = DeckFactory.easyLevel();
       }
     };
 
     randomNumber = function() {
-      return Math.floor(Math.random() * $scope.deck.length);
+      return Math.floor(Math.random() * deck.length);
     };
 
     getCard = function() {
       random = randomNumber();
-      return card = $scope.deck[random] || getCard();
+      return card = deck[random] || getCard();
     };
 
     removeFromDeck = function(card){
-      var index = $scope.deck.indexOf(card);
-      $scope.deck[index] = null;
+      var index = deck.indexOf(card);
+      deck[index] = null;
     };
 
     removeFromTable = function(){
-      $scope.selectedCards.forEach(function(card) {
+      selectedCards.forEach(function(card) {
         var index = $scope.table.indexOf(card);
         $scope.table.splice(index, 1);
       });
@@ -104,22 +104,22 @@ angular.module('starter.controllers')
     };
 
     deselectAllCards = function(){
-      $scope.selectedCards.forEach(function(card) {
+      selectedCards.forEach(function(card) {
         card.shadow = 'default';
       });
 
-      $scope.selectedCards = [];
+      selectedCards = [];
     };
 
     deselectCard = function(card) {
       card.shadow = 'default';
 
-      var index = $scope.selectedCards.indexOf(card);
-      $scope.selectedCards.splice(index, 1);
+      var index = selectedCards.indexOf(card);
+      selectedCards.splice(index, 1);
     };
 
     replaceSelectedCards = function () {
-      $scope.selectedCards.forEach(function(card) {
+      selectedCards.forEach(function(card) {
         var index = $scope.table.indexOf(card);
         var newCard = getCard();
         $scope.table[index] = newCard;
