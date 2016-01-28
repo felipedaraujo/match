@@ -9733,10 +9733,32 @@ a.button {
   transition-duration: 0s; }
 
 .home-title {
-  color: #ef476f;
+  color: #EF476F;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px; }
+
+.button.button-calm-green {
+  background-color: #06D6A0;
+  border: solid 2px;
+  border-color: #05B789;
+  color: white; }
+
+.button.button-surf {
+  background-color: #118AB2;
+  border: solid 2px;
+  border-color: #0F789B;
+  color: white; }
+
+.button.button-tikkari {
+  background-color: #EF476F;
+  border: solid 2px;
+  border-color: #DD375B;
+  color: white; }
+
+.toggle.toggle-calm-green input:checked + .track {
+  background-color: #06D6A0;
+  border-color: #05B789; }
 
 .tres-card {
   width: 75px;
@@ -9757,13 +9779,13 @@ a.button {
   transform: translateY(-50%); }
 
 .pink {
-  color: #ef476f; }
+  color: #EF476F; }
 
 .yellow {
-  color: #ffd166; }
+  color: #FFD166; }
 
 .green {
-  color: #06d6a0; }
+  color: #06D6A0; }
 
 svg {
   fill: currentColor;

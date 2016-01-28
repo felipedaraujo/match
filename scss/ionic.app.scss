@@ -22,11 +22,45 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 @import url(https://fonts.googleapis.com/css?family=Londrina+Shadow);
 
+$tikkari: #EF476F;
+$dish-fish: #DD375B;
+$calm-green: #06D6A0;
+$dark-green: #05B789;
+$surf-blue: #118AB2;
+$dark-blue: #0F789B;
+$butter-yellow: #FFD166;
+
 .home-title {
-  color: #ef476f;
+  color: $tikkari;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px;
+}
+
+.button {
+  &.button-calm-green {
+    background-color: $calm-green;
+    border: solid 2px;
+    border-color: $dark-green;
+    color: white;
+  }
+  &.button-surf {
+    background-color: $surf-blue;
+    border: solid 2px;
+    border-color: $dark-blue;
+    color: white;
+  }
+  &.button-tikkari {
+    background-color: $tikkari;
+    border: solid 2px;
+    border-color: $dish-fish;
+    color: white;
+  }
+}
+
+.toggle.toggle-calm-green input:checked + .track {
+  background-color: $calm-green;
+  border-color: $dark-green;
 }
 
 .tres-card {
@@ -52,15 +86,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .pink {
-  color: #ef476f;
+  color: $tikkari;
 }
 
 .yellow {
-  color: #ffd166;
+  color: $butter-yellow;
 }
 
 .green {
-  color: #06d6a0;
+  color: $calm-green;
 }
 
 svg {
