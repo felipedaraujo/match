@@ -34,7 +34,7 @@ angular.module('starter.controllers')
         $scope.table.splice(index, 1);
       });
 
-      if ($scope.table.length <= 0) endGameAlert();
+      if ($scope.table.length <= 0) AlertService.endGame();
     };
 
     deselectAllCards = function(){
@@ -60,7 +60,7 @@ angular.module('starter.controllers')
         removeFromDeck(newCard);
       })
 
-      if (!anyMatch()) noMatchAvailableAlert();
+      if (!anyMatch()) AlertService.noMatchAvailable();
       $scope.switchEnabled = !anyMatch();
     };
 
@@ -73,7 +73,7 @@ angular.module('starter.controllers')
         }
       }
 
-      if (!anyMatch()) noMatchAvailableAlert();
+      if (!anyMatch()) AlertService.noMatchAvailable();
       $scope.switchEnabled = !anyMatch();
     };
 
@@ -232,7 +232,7 @@ angular.module('starter.controllers')
             }
 
           } else {
-            doesNotMatchAlert();
+            AlertService.doesNotMatch();
           }
 
           deselectAllCards(card);
@@ -254,14 +254,14 @@ angular.module('starter.controllers')
 
       $scope.table[0] = deckCard;
       removeFromDeck(deckCard);
-      addOnDeck(tableCard);
+      $scope.deck.push(tableCard)
 
-      if (!anyMatch()) noMatchAvailableAlert();
+      if (!anyMatch()) AlertService.noMatchAvailable();
       $scope.switchEnabled = !anyMatch();
     }
 
-    $scope.leaveGameAlert = function() {
-      leaveGameAlert();
+    $scope.leaveGame = function() {
+      AlertService.leaveGame();
     }
   })
   .directive('cards', function() {
