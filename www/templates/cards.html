@@ -1,6 +1,6 @@
 <div id="cards">
   <div id="card-{{card.id}}" class="tres-card {{card.shadow}}"
-       ng-repeat="card in table track by card.id" ng-click="selectCard(card)">
+       ng-repeat="card in table track by card.id" ng-click="toggleCard(card)">
     <div class="center-vertical">
       <div id="icon-{{card.id}}-{{$index}}" class="{{card.color}}" ng-include="setIcon(card)"
            ng-repeat="i in getNumber(card.repeat) track by $index">

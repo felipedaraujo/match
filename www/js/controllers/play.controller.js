@@ -1,12 +1,11 @@
 angular.module('starter.controllers')
-  .controller('PlayCtrl', function($scope, $window, Alert, Comparator,
+  .controller('PlayCtrl', function($scope, $window, $timeout, Alert, Comparator,
     DeckFactory) {
 
     var deck = [];
-    var selectedCards = [];
+    $scope.selectedCards = [];
     $scope.table = [];
-    $scope.totalSets = 0
-    $scope.switchEnabled = false;
+    $scope.canReplace = false;
 
     $scope.init = function() {
       setDeck();
@@ -21,42 +20,15 @@ angular.module('starter.controllers')
       return "img/" + card.shape + "-" + card.fill + ".svg";
     };
 
-    $scope.selectCard = function(card){
-      var index = selectedCards.indexOf(card);
-
-      if (selectedCards.length < 3 && index === -1) {
-        selectedCards.push(card);
-
-        card.shadow = 'selected';
-
-        if (selectedCards.length >= 3) {
-
-          if (Comparator.isMatch(selectedCards)) {
-            $scope.totalSets++
-
-            if ($scope.deckSize() > 0) {
-              replaceSelectedCards();
-            } else {
-              removeFromTable(selectedCards);
-            }
-
-          } else {
-            Alert.doesNotMatch();
-          }
-
-          deselectAllCards(card);
-        }
-
+    $scope.toggleCard = function(card){
+      if ($scope.selectedCards.length < 3 && wasSelected(card)) {
+        selectedCard(card)
       } else {
         deselectCard(card);
       }
     }
 
-    $scope.deckSize = function() {
-      return deck.filter(function(value) { return value !== null }).length;
-    };
-
-    $scope.switchCard = function() {
+    $scope.replaceCard = function() {
       var tableCard = $scope.table[0];
       var deckCard = getCard();
 
@@ -65,12 +37,23 @@ angular.module('starter.controllers')
       deck.push(tableCard)
 
       if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.switchEnabled = !Comparator.anyMatch($scope.table);
+      $scope.canReplace = !Comparator.anyMatch($scope.table);
     };
 
     $scope.leaveGame = function() {
       Alert.leaveGame();
     };
+
+    $scope.$watchCollection('selectedCards', function() {
+      if ($scope.selectedCards.length >= 3) {
+        $timeout(function(){
+          if (Comparator.isMatch($scope.selectedCards)) {
+            deckSize() >= 3 ? replaceCards() : removeFromTable();
+          }
+          deselectCards();
+        }, 100)
+      }
+    });
 
     setDeck = function (){
       if (window.localStorage['level'] == "Hard") {
@@ -78,6 +61,10 @@ angular.module('starter.controllers')
       } else {
         deck = DeckFactory.easyLevel();
       }
+    };
+
+    deckSize = function() {
+      return deck.filter(function(value) { return value !== null }).length;
     };
 
     randomNumber = function() {
@@ -95,7 +82,7 @@ angular.module('starter.controllers')
     };
 
     removeFromTable = function(){
-      selectedCards.forEach(function(card) {
+      $scope.selectedCards.forEach(function(card) {
         var index = $scope.table.indexOf(card);
         $scope.table.splice(index, 1);
       });
@@ -103,23 +90,35 @@ angular.module('starter.controllers')
       if ($scope.table.length <= 0) Alert.endGame();
     };
 
-    deselectAllCards = function(){
-      selectedCards.forEach(function(card) {
-        card.shadow = 'default';
-      });
-
-      selectedCards = [];
+    selectedCard = function(card) {
+      $scope.selectedCards.push(card);
+      card.shadow = 'selected';
     };
 
     deselectCard = function(card) {
       card.shadow = 'default';
 
-      var index = selectedCards.indexOf(card);
-      selectedCards.splice(index, 1);
+      var index = $scope.selectedCards.indexOf(card);
+      $scope.selectedCards.splice(index, 1);
     };
 
-    replaceSelectedCards = function () {
-      selectedCards.forEach(function(card) {
+    deselectCards = function(){
+      $scope.selectedCards.forEach(function(card) {
+        card.shadow = 'default';
+      });
+      $scope.selectedCards = [];
+    };
+
+    wasSelected = function(card){
+      if($scope.selectedCards.indexOf(card) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    replaceCards = function () {
+      $scope.selectedCards.forEach(function(card) {
         var index = $scope.table.indexOf(card);
         var newCard = getCard();
         $scope.table[index] = newCard;
@@ -127,11 +126,11 @@ angular.module('starter.controllers')
       })
 
       if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.switchEnabled = !Comparator.anyMatch($scope.table);
+      $scope.canReplace = !Comparator.anyMatch($scope.table);
     };
 
     giveCards = function() {
-      if ($scope.deckSize() > 0) {
+      if (deckSize() > 0) {
         while ($scope.table.length < 12) {
           var card = getCard();
           $scope.table.push(card);
@@ -140,7 +139,7 @@ angular.module('starter.controllers')
       }
 
       if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.switchEnabled = !Comparator.anyMatch($scope.table);
+      $scope.canReplace = !Comparator.anyMatch($scope.table);
     };
 
   })

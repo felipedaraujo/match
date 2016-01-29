@@ -1,14 +1,6 @@
 angular.module('starter.services')
   .service('Alert', function($window) {
 
-    this.doesNotMatch = function() {
-      swal({
-        title:"That is not a set.",
-        confirmButtonText:"Try again",
-        type: "warning"
-      });
-    }
-
     this.endGame = function() {
       swal({
         title: "You win!",
