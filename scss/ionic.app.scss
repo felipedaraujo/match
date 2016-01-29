@@ -30,11 +30,14 @@ $surf-blue: #118AB2;
 $dark-blue: #0F789B;
 $butter-yellow: #FFD166;
 
-.home-title {
+.main-title {
   color: $tikkari;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px;
+  &.home {
+    margin-bottom: 50px;
+  }
 }
 
 .button {

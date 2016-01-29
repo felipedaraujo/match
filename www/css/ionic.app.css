@@ -9732,11 +9732,13 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.home-title {
+.main-title {
   color: #EF476F;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px; }
+  .main-title.home {
+    margin-bottom: 50px; }
 
 .button.button-calm-green {
   background-color: #06D6A0;
