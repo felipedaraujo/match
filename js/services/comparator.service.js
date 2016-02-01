@@ -84,6 +84,11 @@ angular.module('starter.services')
            areEqual(buildArgs('repeat'))) ||
 
           (areDifferent(buildArgs('color')) &&
+           areEqual(buildArgs('shape')) &&
+           areEqual(buildArgs('fill')) &&
+           areDifferent(buildArgs('repeat'))) ||
+
+          (areDifferent(buildArgs('color')) &&
            areDifferent(buildArgs('shape')) &&
            areDifferent(buildArgs('fill')) &&
            areDifferent(buildArgs('repeat')))){

@@ -5,6 +5,14 @@ angular.module('starter.factories')
     var fills = ['solid', 'borded', 'striped'];
     var repeats = [1, 2, 3];
 
+    setDeck = function (){
+      if (window.localStorage['level'] == "Hard") {
+        return hardLevel();
+      } else {
+        return easyLevel();
+      }
+    };
+
     easyLevel = function() {
       var counter = -1, deck = [];
       colors.forEach(function(color) {
@@ -38,7 +46,6 @@ angular.module('starter.factories')
     }
 
     return {
-      easyLevel: easyLevel,
-      hardLevel: hardLevel
+      setDeck: setDeck
     }
   })
