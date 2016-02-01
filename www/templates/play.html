@@ -1,13 +1,12 @@
-<ion-panel data-ng-init="init()">
+<ion-panel ng-init="init()">
   <ion-header-bar>
-    <button class="button button-clear button-energized button-energized ion-ios-star" ng-click="replaceCard()" ng-show="canReplace"></button>
-    <h1 class="title">0</h1>
+    <button class="button button-clear button-dark ion-ios-locked" ng-click="unlockGame()" ng-show="locked"> unlock</button>
     <button class="button button-icon ion-ios-close-empty" ng-click="leaveGame()"></button>
   </ion-header-bar>
   <ion-content class="padding">
     <div class="button-bar">
       <button class="button button-clear button-dark">
-        0 sets
+        {{points}} points
       </button>
       <button class="button button-icon ion-clock">
         <timer interval="1000">{{mminutes}}:{{sseconds}}</timer>
