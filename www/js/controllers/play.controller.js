@@ -30,16 +30,15 @@ angular.module('starter.controllers')
       }
     }
 
-    $scope.replaceCard = function() {
-      var tableCard = $scope.table[0];
+    $scope.unlockGame = function() {
+      var tableCard = $scope.tableDeck[0];
       var deckCard = getCard();
 
-      $scope.table[0] = deckCard;
+      $scope.tableDeck[0] = deckCard;
       removeFromDeck(deckCard);
       deck.push(tableCard)
 
-      if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.canReplace = !Comparator.anyMatch($scope.table);
+      checkMatches();
     };
 
     $scope.leaveGame = function() {
@@ -82,22 +81,22 @@ angular.module('starter.controllers')
 
     removeFromTable = function(){
       $scope.selectedCards.forEach(function(card) {
-        var index = $scope.table.indexOf(card);
-        $scope.table.splice(index, 1);
+        var index = $scope.tableDeck.indexOf(card);
+        $scope.tableDeck.splice(index, 1);
       });
 
-      if ($scope.table.length <= 0) Alert.endGame();
+      if ($scope.tableDeck.length <= 0) Alert.youWin();
     };
 
     selectedCard = function(card) {
-      $scope.selectedCards.push(card);
       card.shadow = 'selected';
+      $scope.selectedCards.push(card);
     };
 
     deselectCard = function(card) {
-      card.shadow = 'default';
-
       var index = $scope.selectedCards.indexOf(card);
+
+      card.shadow = 'default';
       $scope.selectedCards.splice(index, 1);
     };
 
@@ -116,29 +115,31 @@ angular.module('starter.controllers')
       }
     };
 
+    checkMatches = function(){
+      if (!Comparator.anyMatch($scope.tableDeck)) Alert.noMatchAvailable();
+      $scope.locked = !Comparator.anyMatch($scope.tableDeck);
+    }
+
     replaceCards = function () {
       $scope.selectedCards.forEach(function(card) {
-        var index = $scope.table.indexOf(card);
+        var index = $scope.tableDeck.indexOf(card);
         var newCard = getCard();
-        $scope.table[index] = newCard;
+        $scope.tableDeck[index] = newCard;
         removeFromDeck(newCard);
       })
-
-      if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.canReplace = !Comparator.anyMatch($scope.table);
+      checkMatches();
     };
 
-    giveCards = function() {
-      if (deckSize() > 0) {
-        while ($scope.table.length < 12) {
-          var card = getCard();
-          $scope.table.push(card);
-          removeFromDeck(card);
-        }
+    setTableDeck = function() {
+      var maxCards = window.localStorage['level'] == 'Hard' ? 12 : 9;
+
+      while ($scope.tableDeck.length < maxCards) {
+        var card = getCard();
+        $scope.tableDeck.push(card);
+        removeFromDeck(card);
       }
 
-      if (!Comparator.anyMatch($scope.table)) Alert.noMatchAvailable();
-      $scope.canReplace = !Comparator.anyMatch($scope.table);
+      checkMatches();
     };
 
   })

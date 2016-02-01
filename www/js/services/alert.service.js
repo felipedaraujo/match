@@ -1,7 +1,7 @@
 angular.module('starter.services')
   .service('Alert', function($window) {
 
-    this.endGame = function() {
+    this.youWin = function() {
       swal({
         title: "You win!",
         type: "success",
