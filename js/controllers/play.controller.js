@@ -1,15 +1,17 @@
 angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $window, $timeout, Alert, Comparator,
-    DeckFactory) {
+    DeckFactory, ScoresFactory) {
 
     var deck = [];
+    var currentTime = null;
     $scope.selectedCards = [];
-    $scope.table = [];
-    $scope.canReplace = false;
+    $scope.tableDeck = [];
+    $scope.locked = false;
+    $scope.points = 0;
 
     $scope.init = function() {
-      setDeck();
-      giveCards();
+      deck = DeckFactory.setDeck();
+      setTableDeck();
     };
 
     $scope.getNumber = function(num) {
@@ -49,19 +51,16 @@ angular.module('starter.controllers')
         $timeout(function(){
           if (Comparator.isMatch($scope.selectedCards)) {
             deckSize() >= 3 ? replaceCards() : removeFromTable();
+            $scope.points += ScoresFactory.score(currentTime);
           }
           deselectCards();
-        }, 100)
+        }, 300)
       }
     });
 
-    setDeck = function (){
-      if (window.localStorage['level'] == "Hard") {
-        deck = DeckFactory.hardLevel();
-      } else {
-        deck = DeckFactory.easyLevel();
-      }
-    };
+    $scope.$on('timer-tick', function (event, args) {
+      currentTime = args.millis;
+    });
 
     deckSize = function() {
       return deck.filter(function(value) { return value !== null }).length;
