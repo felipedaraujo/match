@@ -29,6 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         templateUrl: 'templates/home.html',
       }).
       state('play', {
+        cache: false,
         url: '/play',
         templateUrl: 'templates/play.html',
         controller: 'PlayCtrl'
