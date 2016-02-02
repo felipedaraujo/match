@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -57,5 +57,9 @@ angular.module('starter.factories', [])
 
 angular.module(
   'starter.controllers',
-  ['timer', 'starter.services', 'starter.factories']
+  [
+    'starter.services',
+    'starter.factories',
+    'timer'
+  ]
 )
