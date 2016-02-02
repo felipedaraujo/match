@@ -35,8 +35,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
         controller: 'PlayCtrl'
       }).
       state('scores', {
+        cache: false,
         url: '/scores',
-        templateUrl: 'templates/scores.html'
+        templateUrl: 'templates/scores.html',
+        controller: 'ScoresCtrl'
       }).
       state('how-to-play', {
         url: '/how-to-play',
