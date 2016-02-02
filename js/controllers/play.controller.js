@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-  .controller('PlayCtrl', function($scope, $window, $timeout, Alert, Comparator,
+  .controller('PlayCtrl', function($scope, $window, $timeout, Alert, Audio, Comparator,
     DeckFactory, ScoresFactory) {
 
     var deck = [];
@@ -90,7 +90,10 @@ angular.module('starter.controllers')
 
     selectedCard = function(card) {
       card.shadow = 'selected';
+
       $scope.selectedCards.push(card);
+
+      Audio.select();
     };
 
     deselectCard = function(card) {
