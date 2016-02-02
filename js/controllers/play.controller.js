@@ -53,8 +53,8 @@ angular.module('starter.controllers')
       if ($scope.selectedCards.length >= 3) {
         $timeout(function(){
           if (Comparator.isMatch($scope.selectedCards)) {
-            deckSize() >= 3 ? replaceCards() : removeFromTable();
             $scope.points += ScoresFactory.score(currentTime);
+            deckSize() >= 3 ? replaceCards() : removeFromTable();
 
             if (sound) { Audio.score(); }
 
@@ -97,7 +97,14 @@ angular.module('starter.controllers')
 
       if ($scope.tableDeck.length <= 0) {
         Alert.youWin();
+        finalScore();
         if (sound) { Audio.end(); }
+      }
+    };
+
+    finalScore = function(){
+      if ($scope.points > window.localStorage['record']) {
+        window.localStorage['record'] = $scope.points;
       }
     };
 
