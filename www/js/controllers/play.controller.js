@@ -4,10 +4,13 @@ angular.module('starter.controllers')
 
     var deck = [];
     var currentTime = null;
+    var sound = window.localStorage['sound'] == 'On' ? true : false
+
     $scope.selectedCards = [];
     $scope.tableDeck = [];
     $scope.locked = false;
     $scope.points = 0;
+
 
     $scope.init = function() {
       deck = DeckFactory.setDeck();
@@ -43,6 +46,7 @@ angular.module('starter.controllers')
 
     $scope.leaveGame = function() {
       Alert.leaveGame();
+      if (sound) { Audio.leave(); }
     };
 
     $scope.$watchCollection('selectedCards', function() {
@@ -51,7 +55,13 @@ angular.module('starter.controllers')
           if (Comparator.isMatch($scope.selectedCards)) {
             deckSize() >= 3 ? replaceCards() : removeFromTable();
             $scope.points += ScoresFactory.score(currentTime);
+
+            if (sound) { Audio.score(); }
+
+          } else {
+            if (sound) { Audio.deselect(); }
           }
+
           deselectCards();
         }, 300)
       }
@@ -85,15 +95,17 @@ angular.module('starter.controllers')
         $scope.tableDeck.splice(index, 1);
       });
 
-      if ($scope.tableDeck.length <= 0) Alert.youWin();
+      if ($scope.tableDeck.length <= 0) {
+        Alert.youWin();
+        if (sound) { Audio.end(); }
+      }
     };
 
     selectedCard = function(card) {
       card.shadow = 'selected';
-
       $scope.selectedCards.push(card);
 
-      Audio.select();
+      if (sound) { Audio.select(); }
     };
 
     deselectCard = function(card) {
@@ -101,6 +113,8 @@ angular.module('starter.controllers')
 
       card.shadow = 'default';
       $scope.selectedCards.splice(index, 1);
+
+      if (sound) { Audio.deselect(); }
     };
 
     deselectCards = function(){

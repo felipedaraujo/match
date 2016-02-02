@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
     $urlRouterProvider.otherwise('/home');
   })
 
-angular.module('starter.services', [])
+angular.module('starter.services', ['starter.factories'])
 
 angular.module('starter.factories', [])
 
