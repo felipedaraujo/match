@@ -77,6 +77,19 @@ angular.module('starter.controllers')
       currentTime = args.millis;
     });
 
+    millisToMinutesAndSeconds = function(millis) {
+      var minutes = Math.floor(millis / 60000);
+      var seconds = ((millis % 60000) / 1000).toFixed(0);
+      return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    }
+
+    minutesAndSecondsToMillis = function(minAndSec) {
+      var time = minAndSec.split(":");
+      var minutes = time[0];
+      var seconds = time[1];
+      return parseInt(minutes) * 60000 + parseInt(seconds) * 1000;
+    }
+
     deckSize = function() {
       return deck.filter(function(value) { return value !== null }).length;
     };
@@ -102,15 +115,23 @@ angular.module('starter.controllers')
       });
 
       if ($scope.tableDeck.length <= 0) {
-        Alert.youWin();
+        Modal.open($scope);
         finalScore();
         if (sound) { Audio.end(); }
       }
     };
 
     finalScore = function(){
-      if ($scope.points > window.localStorage['record']) {
+      var storedRecord = window.localStorage['record'] || 0;
+      var storedTime = window.localStorage['time'] || "99:99";
+
+      if ($scope.points > storedRecord) {
         window.localStorage['record'] = $scope.points;
+        window.localStorage['time'] = millisToMinutesAndSeconds(currentTime);
+      }
+      if ($scope.points >= storedRecord &&
+        currentTime < minutesAndSecondsToMillis(storedTime)) {
+        window.localStorage['time'] = millisToMinutesAndSeconds(currentTime);
       }
     };
 
