@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
-  .controller('PlayCtrl', function($scope, $window, $timeout, Alert, Audio, Comparator,
-    DeckFactory, ScoresFactory) {
+  .controller('PlayCtrl', function($scope, $state, $timeout, Alert, Audio,
+    Comparator, Modal, DeckFactory, ScoresFactory) {
 
     var deck = [];
     var currentTime = null;
@@ -10,7 +10,6 @@ angular.module('starter.controllers')
     $scope.tableDeck = [];
     $scope.locked = false;
     $scope.points = 0;
-
 
     $scope.init = function() {
       deck = DeckFactory.setDeck();
@@ -48,6 +47,13 @@ angular.module('starter.controllers')
       Alert.leaveGame();
       if (sound) { Audio.leave(); }
     };
+
+    $scope.changeState = function(state) {
+      Modal.close();
+
+      var reload = $state.current.name == state ? true : false;
+      $state.go(state, {}, {reload: reload});
+    }
 
     $scope.$watchCollection('selectedCards', function() {
       if ($scope.selectedCards.length >= 3) {
