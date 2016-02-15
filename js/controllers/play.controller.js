@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
-  .controller('PlayCtrl', function($scope, $state, $timeout, Alert, Audio,
-    Comparator, Modal, DeckFactory, ScoresFactory) {
+  .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
+    Alert, Audio, Comparator, Modal, DeckFactory, ScoresFactory) {
 
     var deck = [];
     var currentTime = null;
@@ -61,6 +61,10 @@ angular.module('starter.controllers')
 
     $scope.getNumber = function(num) {
       return new Array(num);
+    }
+
+    $scope.shareAnywhere = function() {
+      $cordovaSocialSharing.share("This is your message", "This is your subject", "www/img/tres.png", "http://www.felipedearaujo.com/tres");
     }
 
     $scope.$watchCollection('selectedCards', function() {
@@ -124,9 +128,11 @@ angular.module('starter.controllers')
       });
 
       if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch($scope.tableDeck)) {
-        Modal.open($scope, 'end-game');
-        finalScore();
-        if (sound) { Audio.end(); }
+        $timeout(function(){
+          Modal.open($scope, 'end-game');
+          finalScore();
+          if (sound) { Audio.end(); }
+        }, 1500)
       }
     };
 
