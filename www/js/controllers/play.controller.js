@@ -58,6 +58,10 @@ angular.module('starter.controllers')
       $state.go(state, {}, {reload: reload});
     }
 
+    $scope.getNumber = function(num) {
+      return new Array(num);
+    }
+
     $scope.$watchCollection('selectedCards', function() {
       if ($scope.selectedCards.length >= 3) {
         $timeout(function(){
