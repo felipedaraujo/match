@@ -9,6 +9,7 @@ angular.module('starter.controllers')
     $scope.selectedCards = [];
     $scope.tableDeck = [];
     $scope.points = 0;
+    $scope.isDisabled = false;
 
     $scope.init = function() {
       deck = DeckFactory.setDeck();
@@ -64,19 +65,20 @@ angular.module('starter.controllers')
 
     $scope.$watchCollection('selectedCards', function() {
       if ($scope.selectedCards.length >= 3) {
+        $scope.isDisabled = true;
+
         $timeout(function(){
           if (Comparator.isMatch($scope.selectedCards)) {
             $scope.points += ScoresFactory.score(currentTime);
             deckSize() >= 3 ? replaceCards() : removeFromTable();
-
             if (sound) { Audio.score(); }
-
           } else {
             if (sound) { Audio.deselect(); }
           }
-
           deselectCards();
-        }, 300)
+          $scope.isDisabled = false;
+
+        }, 250)
       }
     });
 
