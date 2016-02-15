@@ -8,7 +8,6 @@ angular.module('starter.controllers')
 
     $scope.selectedCards = [];
     $scope.tableDeck = [];
-    $scope.locked = false;
     $scope.points = 0;
 
     $scope.init = function() {
@@ -33,14 +32,18 @@ angular.module('starter.controllers')
     }
 
     $scope.unlockGame = function() {
-      var tableCard = $scope.tableDeck[0];
-      var deckCard = getCard();
+      var tableCard, deckCard;
 
-      $scope.tableDeck[0] = deckCard;
-      removeFromDeck(deckCard);
-      deck.push(tableCard)
+      while(!Comparator.anyMatch($scope.tableDeck)){
+        tableCard = $scope.tableDeck[0];
+        deckCard = getCard();
 
-      checkMatches();
+        $scope.tableDeck[0] = deckCard;
+        removeFromDeck(deckCard);
+        deck.push(tableCard);
+      }
+
+      Modal.close();
     };
 
     $scope.leaveGame = function() {
@@ -114,8 +117,8 @@ angular.module('starter.controllers')
         $scope.tableDeck.splice(index, 1);
       });
 
-      if ($scope.tableDeck.length <= 0) {
-        Modal.open($scope);
+      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch($scope.tableDeck)) {
+        Modal.open($scope, 'end-game');
         finalScore();
         if (sound) { Audio.end(); }
       }
@@ -167,8 +170,9 @@ angular.module('starter.controllers')
     };
 
     checkMatches = function(){
-      if (!Comparator.anyMatch($scope.tableDeck)) Alert.noMatchAvailable();
-      $scope.locked = !Comparator.anyMatch($scope.tableDeck);
+      if (!Comparator.anyMatch($scope.tableDeck)) {
+        Modal.open($scope, 'unlock-game');
+      }
     }
 
     replaceCards = function () {
@@ -178,6 +182,7 @@ angular.module('starter.controllers')
         $scope.tableDeck[index] = newCard;
         removeFromDeck(newCard);
       })
+
       checkMatches();
     };
 
