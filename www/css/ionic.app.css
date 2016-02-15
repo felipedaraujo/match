@@ -9737,7 +9737,7 @@ a.button {
   vertical-align: top; }
   .tres-card.default {
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5); }
-  .tres-card:hover, .tres-card.selected {
+  .tres-card.selected {
     box-shadow: 0 0 5px 2px rgba(0, 83, 255, 0.78); }
 
 .center-vertical {
