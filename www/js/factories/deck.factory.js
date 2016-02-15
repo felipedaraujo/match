@@ -1,6 +1,6 @@
 angular.module('starter.factories')
   .factory('DeckFactory', function() {
-    var colors = ['pink', 'yellow', 'green'];
+    var colors = ['assertive', 'energized', 'balanced'];
     var shapes = ['circle', 'square', 'triangle'];
     var fills = ['solid', 'borded', 'striped'];
     var repeats = [1, 2, 3];
