@@ -1,6 +1,6 @@
 <div class="tres-card {{card.shadow}}"
      ng-repeat="card in tableDeck"
-     ng-click="toggleCard(card)">
+     ng-click="isDisabled || toggleCard(card)">
   <div class="center-vertical">
     <div class="{{card.color}}"
          ng-include="setIcon(card)"
