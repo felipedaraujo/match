@@ -8,6 +8,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px;
+  &.home {
+    margin-bottom: 100px;
+  }
 }
 
 .button {
