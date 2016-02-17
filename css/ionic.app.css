@@ -9716,6 +9716,12 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.button {
+  font-size: 20px; }
+
+.padding {
+  padding: 0 10px; }
+
 .main-title {
   color: #EF476F;
   font-family: "Londrina Shadow", cursive;
@@ -9724,17 +9730,12 @@ a.button {
   .main-title.home {
     margin-bottom: 100px; }
 
-.button {
-  font-size: 20px; }
-
 .tres-card {
-  width: 75px;
-  height: 105px;
-  margin: 5px;
+  height: 100%;
+  width: 0;
+  margin: 0 auto;
   border-radius: 5px;
-  border: 0px solid black;
-  display: inline-block;
-  vertical-align: top; }
+  border: 0px solid black; }
   .tres-card.default {
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5); }
   .tres-card.selected {
@@ -9747,13 +9748,13 @@ a.button {
 
 svg {
   fill: currentColor;
-  width: 42px;
-  height: 42px;
-  transform: scale(0.6);
-  margin: -8px; }
+  margin: 3px; }
 
 .semi-transparent {
   background: rgba(255, 255, 255, 0.5); }
+
+.scroll {
+  height: 100%; }
 
 .unlock-game.scroll-content {
   display: table !important;
@@ -9764,3 +9765,13 @@ svg {
   display: table-cell;
   vertical-align: middle;
   text-align: center; }
+
+.deck-row.row {
+  height: 25%; }
+
+.deck-col.col {
+  height: 100%; }
+
+.card-row.row,
+.card-col.col {
+  padding: 0; }

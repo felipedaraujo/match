@@ -3,7 +3,8 @@
     <h1 class="title"></h1>
     <button class="button button-icon ion-ios-close-empty" ng-click="leaveGame()"></button>
   </ion-header-bar>
-  <ion-content class="padding">
+
+  <ion-header-bar class="bar bar-subheader">
     <div class="button-bar">
       <button class="button button-clear button-dark">
         {{points}} points
@@ -12,8 +13,9 @@
         <timer interval="1000">{{mminutes}}:{{sseconds}}</timer>
       </button>
     </div>
-    <div class='text-center'>
-      <cards></cards>
-    </div>
+  </ion-header-bar>
+
+  <ion-content class="padding text-center" scroll="false">
+    <cards></cards>
   </ion-content>
 </ion-panel>

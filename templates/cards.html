@@ -1,10 +1,18 @@
-<div class="tres-card {{card.shadow}}"
-     ng-repeat="card in tableDeck"
-     ng-click="isDisabled || toggleCard(card)">
-  <div class="center-vertical">
-    <div class="{{card.color}}"
-         ng-include="setIcon(card)"
-         ng-repeat="i in getNumber(card.repeat) track by $index">
+<div class="deck-row row" ng-repeat="rows in chunkedData">
+  <div class="deck-col col"
+       ng-repeat="card in rows"
+       ng-click="isDisabled || toggleCard(card)">
+    <div class="tres-card {{card.shadow}}" ng-style="{width:cardWidth}" ng-model="card">
+      <div class="center-vertical">
+        <div class="card-row row {{card.color}}"
+             ng-repeat="i in getNumber(card.repeat) track by $index">
+          <div class="card-col col">
+            <svg viewBox="0 0 40 40" ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}">
+              <use xlink:href="{{setIcon(card)}}"/>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -14,14 +14,21 @@ angular.module('starter.controllers')
     $scope.init = function() {
       deck = DeckFactory.setDeck();
       setTableDeck();
+
+      $scope.chunkedData = chunk($scope.tableDeck, 3);
     };
+
+    angular.element(document).ready(function () {
+      $scope.cardWidth = getCardWidth();
+      $scope.iconSize = getIconSize();
+    });
 
     $scope.getNumber = function(num) {
       return new Array(num);
     };
 
     $scope.setIcon = function(card){
-      return "img/" + card.shape + "-" + card.fill + ".svg";
+      return "img/" + card.shape + "-" + card.fill + ".svg#" + card.shape + "-" + card.fill;
     };
 
     $scope.toggleCard = function(card){
@@ -209,6 +216,33 @@ angular.module('starter.controllers')
 
       checkMatches();
     };
+
+    chunk = function (arr, size) {
+      var newArr = [];
+      for (var i=0; i<arr.length; i+=size) {
+        newArr.push(arr.slice(i, i+size));
+      };
+      return newArr;
+    };
+
+    getCardWidth = function() {
+      var result = document.getElementsByClassName("tres-card");
+      return result[0].offsetHeight * 0.7 + 'px';
+    };
+
+    getIconSize = function() {
+      var screenHeight = window.screen.height;
+
+      if (screenHeight < 560) {
+        return 20;
+      } else if (screenHeight >= 560 && screenHeight < 700) {
+        return 25;
+      } else if (screenHeight >= 700 && screenHeight < 840){
+        return 30;
+      } else {
+        return 40;
+      }
+    }
 
   })
   .directive('cards', function() {
