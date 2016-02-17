@@ -3,6 +3,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 @import url(https://fonts.googleapis.com/css?family=Londrina+Shadow);
 
+.button {
+  font-size: 20px;
+}
+
+.padding {
+  padding: 0 10px;
+}
+
 .main-title {
   color: $assertive;
   font-family: "Londrina Shadow", cursive;
@@ -13,18 +21,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   }
 }
 
-.button {
-  font-size: 20px;
-}
-
 .tres-card {
-  width: 75px;
-  height: 105px;
-  margin: 5px;
+  height: 100%;
+  width: 0;
+  margin: 0 auto;
   border-radius: 5px;
   border: 0px solid black;
-  display: inline-block;
-  vertical-align: top;
   &.default {
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
   }
@@ -41,14 +43,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 svg {
   fill: currentColor;
-  width: 42px;
-  height: 42px;
-  transform: scale(0.6);
-  margin: -8px;
+  margin: 3px;
 }
 
 .semi-transparent {
   background: rgba(255,255,255,0.5);
+}
+
+.scroll{
+  height: 100%;
 }
 
 .unlock-game.scroll-content {
@@ -61,4 +64,17 @@ svg {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+}
+
+.deck-row.row {
+  height: 25%
+}
+
+.deck-col.col {
+  height: 100%
+}
+
+.card-row.row,
+.card-col.col {
+  padding: 0;
 }
