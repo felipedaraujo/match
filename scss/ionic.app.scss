@@ -1,7 +1,11 @@
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "www/lib/ionic/scss/ionic";
-@import url(https://fonts.googleapis.com/css?family=Londrina+Shadow);
+
+@font-face {
+  font-family: 'Londrina Shadow';
+  src: url('../fonts/LondrinaShadow-Regular.ttf');
+}
 
 .button {
   font-size: 20px;
