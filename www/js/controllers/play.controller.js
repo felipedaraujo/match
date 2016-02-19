@@ -2,7 +2,7 @@ angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
     Alert, Audio, Comparator, Modal, DeckFactory, ScoresFactory) {
 
-    var deck = [];
+    var mainDeck = [];
     var currentTime = null;
     var sound = window.localStorage['sound'] == 'On' ? true : false
 
@@ -12,10 +12,8 @@ angular.module('starter.controllers')
     $scope.isDisabled = false;
 
     $scope.init = function() {
-      deck = DeckFactory.setDeck();
+      mainDeck = DeckFactory.setDeck();
       setTableDeck();
-
-      $scope.chunkedData = chunk($scope.tableDeck, 3);
     };
 
     angular.element(document).ready(function () {
@@ -23,17 +21,13 @@ angular.module('starter.controllers')
       $scope.iconSize = getIconSize();
     });
 
-    $scope.getNumber = function(num) {
-      return new Array(num);
-    };
-
     $scope.setIcon = function(card){
       return "img/" + card.shape + "-" + card.fill + ".svg#" + card.shape + "-" + card.fill;
     };
 
     $scope.toggleCard = function(card){
       if ($scope.selectedCards.length < 3 && wasSelected(card)) {
-        selectedCard(card)
+        selectCard(card)
       } else {
         deselectCard(card);
       }
@@ -41,14 +35,15 @@ angular.module('starter.controllers')
 
     $scope.unlockGame = function() {
       var tableCard, deckCard;
+      var flatDeck = flattenArray($scope.tableDeck);
 
-      while(!Comparator.anyMatch($scope.tableDeck)){
-        tableCard = $scope.tableDeck[0];
+      while(!Comparator.anyMatch(flatDeck)){
+        tableCard = $scope.tableDeck[0][0];
         deckCard = getCard();
 
-        $scope.tableDeck[0] = deckCard;
+        $scope.tableDeck[0][0] = deckCard;
         removeFromDeck(deckCard);
-        deck.push(tableCard);
+        mainDeck.push(tableCard);
       }
 
       Modal.close();
@@ -64,15 +59,11 @@ angular.module('starter.controllers')
 
       var reload = $state.current.name == state ? true : false;
       $state.go(state, {}, {reload: reload});
-    }
+    };
 
     $scope.getNumber = function(num) {
       return new Array(num);
-    }
-
-    $scope.shareAnywhere = function() {
-      $cordovaSocialSharing.share("This is your message", "This is your subject", "www/img/tres.png", "http://www.felipedearaujo.com/tres");
-    }
+    };
 
     $scope.$watchCollection('selectedCards', function() {
       if ($scope.selectedCards.length >= 3) {
@@ -111,35 +102,47 @@ angular.module('starter.controllers')
     }
 
     deckSize = function() {
-      return deck.filter(function(value) { return value !== null }).length;
+      return mainDeck.filter(function(value) { return value !== null }).length;
     };
 
     randomNumber = function() {
-      return Math.floor(Math.random() * deck.length);
+      return Math.floor(Math.random() * mainDeck.length);
     };
 
     getCard = function() {
       random = randomNumber();
-      return card = deck[random] || getCard();
+      return card = mainDeck[random] || getCard();
     };
 
     removeFromDeck = function(card){
-      var index = deck.indexOf(card);
-      deck[index] = null;
+      var index = mainDeck.indexOf(card);
+      mainDeck[index] = null;
     };
 
     removeFromTable = function(){
       $scope.selectedCards.forEach(function(card) {
-        var index = $scope.tableDeck.indexOf(card);
-        $scope.tableDeck.splice(index, 1);
+        var indeces = cardIndeces($scope.tableDeck, card);
+        $scope.tableDeck[indeces.row].splice(indeces.col, 1);
       });
 
-      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch($scope.tableDeck)) {
+      var flatDeck = flattenArray($scope.tableDeck);
+
+      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch(flatDeck)) {
         $timeout(function(){
           Modal.open($scope, 'end-game');
           finalScore();
           if (sound) { Audio.end(); }
         }, 1500)
+      }
+    };
+
+    cardIndeces = function(matrix, item) {
+      for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+          if (angular.equals(item, matrix[i][j])) {
+            return { row: i, col: j };
+          }
+        }
       }
     };
 
@@ -157,7 +160,7 @@ angular.module('starter.controllers')
       }
     };
 
-    selectedCard = function(card) {
+    selectCard = function(card) {
       card.shadow = 'selected';
       $scope.selectedCards.push(card);
 
@@ -189,40 +192,41 @@ angular.module('starter.controllers')
     };
 
     checkMatches = function(){
-      if (!Comparator.anyMatch($scope.tableDeck)) {
+      var flatDeck = flattenArray($scope.tableDeck);
+
+      if (!Comparator.anyMatch(flatDeck)) {
         Modal.open($scope, 'unlock-game');
       }
     }
 
     replaceCards = function () {
-      $scope.selectedCards.forEach(function(card) {
-        var index = $scope.tableDeck.indexOf(card);
+      $scope.selectedCards.forEach(function(selectedCard) {
+        var indeces = cardIndeces($scope.tableDeck, selectedCard);
         var newCard = getCard();
-        $scope.tableDeck[index] = newCard;
+        $scope.tableDeck[indeces['row']][indeces.col] = newCard;
         removeFromDeck(newCard);
-      })
+      });
 
       checkMatches();
     };
 
     setTableDeck = function() {
-      var maxCards = window.localStorage['level'] == 'Hard' ? 12 : 9;
+      var row, card;
+      var card;
+      var maxRows = window.localStorage['level'] == 'Hard' ? 4 : 3;
 
-      while ($scope.tableDeck.length < maxCards) {
-        var card = getCard();
-        $scope.tableDeck.push(card);
-        removeFromDeck(card);
+      while($scope.tableDeck.length < maxRows) {
+        $scope.tableDeck.push([]);
+        row = $scope.tableDeck.length - 1;
+
+        while($scope.tableDeck[row].length < 3) {
+          card = getCard();
+          $scope.tableDeck[row].push(card);
+          removeFromDeck(card);
+        }
       }
 
       checkMatches();
-    };
-
-    chunk = function (arr, size) {
-      var newArr = [];
-      for (var i=0; i<arr.length; i+=size) {
-        newArr.push(arr.slice(i, i+size));
-      };
-      return newArr;
     };
 
     getCardWidth = function() {
@@ -242,7 +246,11 @@ angular.module('starter.controllers')
       } else {
         return 40;
       }
-    }
+    };
+
+    flattenArray = function(matrix){
+      return Array.prototype.concat.apply([], matrix);
+    };
 
   })
   .directive('cards', function() {
