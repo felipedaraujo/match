@@ -14,13 +14,13 @@ angular.module('starter.factories')
     };
 
     easyLevel = function() {
-      var counter = -1, deck = [];
+      var id = -1, deck = [];
       colors.forEach(function(color) {
         shapes.forEach(function(shape) {
           fills.forEach(function(fill) {
-            counter += 1;
-            var card = {id: counter, color: color, shape: shape,
-              repeat: 1, fill: fill, shadow: 'default'};
+            id += 1;
+            var card = {id: id, color: color, shape: shape,
+              repeat: 1, fill: fill, shadow: 'default', visible: true};
             deck.push(card);
           })
         })
@@ -29,14 +29,14 @@ angular.module('starter.factories')
     }
 
     hardLevel = function(){
-      var counter = -1, deck = [];
+      var id = -1, deck = [];
       colors.forEach(function(color) {
         shapes.forEach(function(shape) {
           fills.forEach(function(fill) {
             repeats.forEach(function(repeat) {
-              counter += 1;
-              var card = { id: counter, color: color, shape: shape,
-                repeat: repeat, fill: fill, shadow: 'default' };
+              id += 1;
+              var card = { id: id, color: color, shape: shape,
+                repeat: repeat, fill: fill, shadow: 'default', visible: true};
               deck.push(card);
             })
           })
