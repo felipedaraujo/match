@@ -4,9 +4,9 @@
        ng-click="isDisabled || toggleCard(card)">
     <div class="tres-card {{card.shadow}}" ng-style="{width:cardWidth}" ng-show="card.visible">
       <div class="center-vertical">
-        <div class="card-row row {{card.color}}"
+        <div class="row nopadding {{card.color}}"
              ng-repeat="i in getNumber(card.repeat) track by $index">
-          <div class="card-col col">
+          <div class="col nopadding">
             <svg viewBox="0 0 40 40" ng-attr-width="{{iconSize}}" ng-attr-height="{{iconSize}}">
               <use xlink:href="{{setIcon(card)}}"/>
             </svg>
