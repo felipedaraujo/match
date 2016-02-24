@@ -44,6 +44,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
         url: '/how-to-play',
         templateUrl: 'templates/how-to-play.html'
       }).
+      state('how-to-play.page', {
+        url: '/:page',
+        templateUrl: function($stateParams) {
+          return 'templates/how-to-play/' + $stateParams.page + '.html';
+        }
+      }).
       state('settings', {
         url: '/settings',
         templateUrl: 'templates/settings.html',
