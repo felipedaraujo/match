@@ -9719,11 +9719,50 @@ a.button {
   font-family: 'Londrina Shadow';
   src: url("../fonts/LondrinaShadow-Regular.ttf"); }
 
+.bar-header {
+  border-bottom-width: 0; }
+
+.bar-footer {
+  border-top-width: 0; }
+
 .button {
   font-size: 20px; }
 
 .padding {
   padding: 0 10px; }
+
+.scroll {
+  height: 100%; }
+
+button.button-icon.round-button {
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+  min-height: 56px;
+  padding: 0;
+  border: none;
+  background-color: #EF476F;
+  color: white;
+  transition: all linear 220ms;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden; }
+  button.button-icon.round-button.assertive {
+    background-color: #EF476F;
+    color: white; }
+    button.button-icon.round-button.assertive.activated {
+      background-color: #d71341; }
+  button.button-icon.round-button.icon:before {
+    font-size: 24px; }
+  button.button-icon.round-button.activated {
+    opacity: 1; }
+
+.center-vertical {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.semi-transparent {
+  background: rgba(255, 255, 255, 0.5); }
 
 .main-title {
   color: #EF476F;
@@ -9744,20 +9783,9 @@ a.button {
   .tres-card.selected {
     box-shadow: 0 0 5px 2px rgba(0, 83, 255, 0.78); }
 
-.center-vertical {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%); }
-
 svg {
   fill: currentColor;
   margin: 3px; }
-
-.semi-transparent {
-  background: rgba(255, 255, 255, 0.5); }
-
-.scroll {
-  height: 100%; }
 
 .unlock-game.scroll-content {
   display: table !important;

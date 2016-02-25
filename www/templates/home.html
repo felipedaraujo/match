@@ -4,10 +4,17 @@
     <a href="#/play" class="button button-balanced button-block">Play</a>
     <a href="#/scores" class="button button-positive button-block">Scores</a>
     <a href="#/how-to-play/1" class="button button-positive button-block">How to play</a>
-    <div class="button-bar">
-      <a class="button button-assertive ion-share"></a>
-      <a class="button button-assertive ion-ios-heart"></a>
-      <a href="#/settings" class="button button-assertive ion-ios-gear"></a>
+
+    <div class="row">
+      <div class="col text-right">
+        <button class="button button-icon round-button assertive ion-share"></button>
+      </div>
+      <div class="col text-center">
+        <button class="button button-icon round-button assertive ion-ios-heart"></button>
+      </div>
+      <div class="col text-left">
+        <button ng-click="go('/settings')" class="button button-icon round-button assertive ion-ios-gear"></button>
+      </div>
     </div>
   </ion-content>
 </ion-panel>

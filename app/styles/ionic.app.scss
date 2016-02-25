@@ -7,13 +7,62 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   src: url('../fonts/LondrinaShadow-Regular.ttf');
 }
 
-.button {
-  font-size: 20px;
+// Redefining Ionic
+
+.bar-header { border-bottom-width: 0; }
+.bar-footer { border-top-width: 0; }
+.button { font-size: 20px; }
+.padding { padding: 0 10px; }
+.scroll { height: 100%; }
+
+// New Styles
+
+$round-button-size: 56px;
+
+button.button-icon.round-button {
+  height: $round-button-size;
+  width: $round-button-size;
+  border-radius: 50%;
+  min-height: $round-button-size;
+  padding: 0;
+  border: none;
+  background-color: $assertive;
+  color: white;
+  transition: all linear 220ms;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+
+  &.assertive {
+    background-color: $assertive;
+    color: white;
+
+    &.activated {
+      background-color: darken($assertive, 15%);
+    }
+  }
+
+  &.icon {
+    &:before {
+      font-size: 24px;
+    }
+  }
+
+  &.activated {
+    opacity: 1;
+  }
 }
 
-.padding {
-  padding: 0 10px;
+.center-vertical {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+.semi-transparent {
+  background: rgba(255,255,255,0.5);
+}
+
+// Game Styles
 
 .main-title {
   color: $assertive;
@@ -39,23 +88,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   }
 }
 
-.center-vertical {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 svg {
   fill: currentColor;
   margin: 3px;
-}
-
-.semi-transparent {
-  background: rgba(255,255,255,0.5);
-}
-
-.scroll{
-  height: 100%;
 }
 
 .unlock-game.scroll-content {
