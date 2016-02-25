@@ -42,13 +42,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }).
       state('how-to-play', {
         url: '/how-to-play',
-        templateUrl: 'templates/how-to-play.html'
+        templateUrl: 'templates/how-to-play.html',
+        controller: 'HowToPlayCtrl'
       }).
       state('how-to-play.page', {
         url: '/:page',
         templateUrl: function($stateParams) {
           return 'templates/how-to-play/' + $stateParams.page + '.html';
-        }
+        },
+        controller: 'HowToPlayPageCtrl'
       }).
       state('settings', {
         url: '/settings',
