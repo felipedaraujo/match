@@ -222,7 +222,7 @@ angular.module('starter.controllers')
 
     getCardWidth = function() {
       var result = document.getElementsByClassName("tres-card");
-      return result[0].offsetHeight * 0.7 + 'px';
+      return result ? result[0].offsetHeight * 0.7 + 'px' : '75px';
     };
 
     getIconSize = function() {
