@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
-    Alert, Audio, Comparator, Modal, DeckFactory, ScoresFactory) {
+    Alert, Comparator, Modal, DeckFactory, ScoresFactory) {
 
     var mainDeck = [];
     var currentTime = null;
@@ -51,7 +51,6 @@ angular.module('starter.controllers')
 
     $scope.leaveGame = function() {
       Alert.leaveGame();
-      if (sound) { Audio.leave(); }
     };
 
     $scope.changeState = function(state) {
@@ -73,9 +72,6 @@ angular.module('starter.controllers')
           if (Comparator.isMatch($scope.selectedCards)) {
             $scope.points += ScoresFactory.score(currentTime);
             deckSize() >= 3 ? replaceCards() : removeFromTable();
-            if (sound) { Audio.score(); }
-          } else {
-            if (sound) { Audio.deselect(); }
           }
           deselectCards();
           $scope.isDisabled = false;
@@ -131,7 +127,6 @@ angular.module('starter.controllers')
         $timeout(function(){
           Modal.open($scope, 'end-game');
           finalScore();
-          if (sound) { Audio.end(); }
         }, 1500)
       }
     };
@@ -163,8 +158,6 @@ angular.module('starter.controllers')
     selectCard = function(card) {
       card.shadow = 'selected';
       $scope.selectedCards.push(card);
-
-      if (sound) { Audio.select(); }
     };
 
     deselectCard = function(card) {
@@ -172,8 +165,6 @@ angular.module('starter.controllers')
 
       card.shadow = 'default';
       $scope.selectedCards.splice(index, 1);
-
-      if (sound) { Audio.deselect(); }
     };
 
     deselectCards = function(){
