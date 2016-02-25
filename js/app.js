@@ -27,6 +27,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       state('home', {
         url: '/home',
         templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
       }).
       state('play', {
         cache: false,
