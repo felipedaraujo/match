@@ -9,4 +9,10 @@
     </header>
     <div class="well" ui-view></div>
   </ion-content>
+
+  <ion-footer-bar>
+    <a ng-href="#/how-to-play/{{previousPage}}" class="button ion-ios-arrow-back icon-left button-clear button-assertive" ng-show="hasPrevious">Previous</a>
+
+    <a ng-href="#/how-to-play/{{nextPage}}" class="button ion-ios-arrow-forward icon-right button-clear button-assertive" ng-show="hasNext">Next</a>
+  </ion-footer-bar>
 </ion-panel>
