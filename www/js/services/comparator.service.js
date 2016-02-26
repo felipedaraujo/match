@@ -3,11 +3,11 @@ angular.module('starter.services')
 
     var selectedCards = [];
 
-    this.anyMatch = function(table) {
-      for(i = 0; i < table.length - 2; i++) {
-        for(j = i + 1; j < table.length - 1; j++) {
-          for(k = j + 1; k < table.length; k++) {
-            var cards = [table[i], table[j], table[k]];
+    this.anyMatch = function(deck) {
+      for(i = 0; i < deck.length - 2; i++) {
+        for(j = i + 1; j < deck.length - 1; j++) {
+          for(k = j + 1; k < deck.length; k++) {
+            var cards = [deck[i], deck[j], deck[k]];
             if (this.isMatch(cards)) return  true;
           }
         }
