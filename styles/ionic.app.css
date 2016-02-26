@@ -9764,13 +9764,18 @@ button.button-icon.round-button {
 .semi-transparent {
   background: rgba(255, 255, 255, 0.5); }
 
+.top-35 {
+  top: 35%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  padding: 0 10px; }
+
 .main-title {
   color: #EF476F;
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px; }
-  .main-title.home {
-    margin-bottom: 100px; }
 
 .tres-card {
   height: 100%;
