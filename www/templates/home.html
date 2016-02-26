@@ -1,20 +1,22 @@
-<ion-panel>
+<ion-pane>
   <ion-content class="padding has-header" scroll="false">
-    <h1 class="text-center main-title home">TRES!</h1>
-    <a href="#/play" class="button button-balanced button-block">Play</a>
-    <a href="#/scores" class="button button-positive button-block">Scores</a>
-    <a href="#/how-to-play/1" class="button button-positive button-block">How to play</a>
+    <h1 class="text-center main-title">TRES!</h1>
+    <div class="top-35">
+      <a href="#/play" class="button button-balanced button-block">Play</a>
+      <a href="#/scores" class="button button-positive button-block">Scores</a>
+      <a href="#/how-to-play/1" class="button button-positive button-block">How to play</a>
 
-    <div class="row">
-      <div class="col text-right">
-        <button ng-click="share()" class="button button-icon round-button assertive ion-share"></button>
-      </div>
-      <div class="col text-center">
-        <button class="button button-icon round-button assertive ion-ios-heart"></button>
-      </div>
-      <div class="col text-left">
-        <button ng-click="go('/settings')" class="button button-icon round-button assertive ion-ios-gear"></button>
+      <div class="row">
+        <div class="col text-right">
+          <button ng-click="share()" class="button button-icon round-button assertive ion-share"></button>
+        </div>
+        <div class="col text-center">
+          <button class="button button-icon round-button assertive ion-ios-heart"></button>
+        </div>
+        <div class="col text-left">
+          <button ng-click="go('/settings')" class="button button-icon round-button assertive ion-ios-gear"></button>
+        </div>
       </div>
     </div>
   </ion-content>
-</ion-panel>
+</ion-pane>

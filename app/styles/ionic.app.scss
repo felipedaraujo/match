@@ -62,6 +62,14 @@ button.button-icon.round-button {
   background: rgba(255,255,255,0.5);
 }
 
+.top-35 {
+  top: 35%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  padding: 0 10px;
+}
+
 // Game Styles
 
 .main-title {
@@ -69,9 +77,6 @@ button.button-icon.round-button {
   font-family: "Londrina Shadow", cursive;
   font-weight: bold;
   font-size: 64px;
-  &.home {
-    margin-bottom: 100px;
-  }
 }
 
 .tres-card {

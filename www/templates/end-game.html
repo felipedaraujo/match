@@ -1,11 +1,13 @@
 <ion-pane>
-  <ion-content class="padding has-header">
+  <ion-content class="padding has-header" scroll="false">
     <h1 class="text-center main-title">TRES!</h1>
     <div class="text-center">
       <h1>{{points}}</h1>
-      <h3>points</h3>
+      <p>POINTS</p>
     </div>
-    <a class="button button-balanced button-block" ng-click="changeState('play')">Play again</a>
-    <a class="button button-positive button-block" ng-click="changeState('home')">Quit</a>
+    <div class="top-35">
+      <button class="button button-balanced button-block" ng-click="changeState('play')">Play again</button>
+      <button class="button button-positive button-block" ng-click="changeState('home')">Quit</button>
+    </div>
   </ion-content>
 </ion-pane>
