@@ -40,10 +40,10 @@ angular.module('starter.controllers')
       while(!Comparator.anyMatch(flatDeck)){
         tableCard = $scope.tableDeck[0][0];
         deckCard = getCard();
-
         $scope.tableDeck[0][0] = deckCard;
         removeFromDeck(deckCard);
         mainDeck.push(tableCard);
+        flatDeck = flattenArray($scope.tableDeck);
       }
 
       Modal.close();
@@ -107,23 +107,32 @@ angular.module('starter.controllers')
 
     getCard = function() {
       random = randomNumber();
-      return card = mainDeck[random] || getCard();
+      card = mainDeck[random] || getCard();
+      return card;
     };
 
-    removeFromDeck = function(card){
+    removeFromDeck = function(card) {
       var index = mainDeck.indexOf(card);
       mainDeck[index] = null;
     };
 
-    removeFromTable = function(){
+    visibleDeck = function(deck) {
+      deck.forEach(function(card) {
+        if (!card.visible) deck.splice(card, 1);
+      });
+
+      return deck;
+    }
+
+    removeFromTable = function() {
       $scope.selectedCards.forEach(function(card) {
-        var indeces = cardIndeces($scope.tableDeck, card);
-        $scope.tableDeck[indeces.row].splice(indeces.col, 1);
+        card.visible = false;
       });
 
       var flatDeck = flattenArray($scope.tableDeck);
+      var visibleCards = visibleDeck(flatDeck);
 
-      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch(flatDeck)) {
+      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch(visibleCards)) {
         $timeout(function(){
           Modal.open($scope, 'end-game');
           finalScore();
