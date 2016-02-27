@@ -4,7 +4,6 @@ angular.module('starter.controllers')
 
     var mainDeck = [];
     var currentTime = null;
-    var sound = window.localStorage['sound'] == 'On' ? true : false
 
     $scope.selectedCards = [];
     $scope.tableDeck = [];
