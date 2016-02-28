@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
-    Alert, Comparator, Modal, DeckFactory, ScoresFactory) {
+    Alert, Application, Comparator, Modal, Time, DeckFactory, ScoresFactory) {
 
     var mainDeck = [];
     var currentTime = null;
@@ -34,7 +34,7 @@ angular.module('starter.controllers')
 
     $scope.unlockGame = function() {
       var tableCard, deckCard;
-      var flatDeck = flattenArray($scope.tableDeck);
+      var flatDeck = Application.flattenArray($scope.tableDeck);
 
       while(!Comparator.anyMatch(flatDeck)){
         tableCard = $scope.tableDeck[0][0];
@@ -42,7 +42,7 @@ angular.module('starter.controllers')
         $scope.tableDeck[0][0] = deckCard;
         removeFromDeck(deckCard);
         mainDeck.push(tableCard);
-        flatDeck = flattenArray($scope.tableDeck);
+        flatDeck = Application.flattenArray($scope.tableDeck);
       }
 
       Modal.close();
@@ -68,9 +68,11 @@ angular.module('starter.controllers')
         $scope.isDisabled = true;
 
         $timeout(function(){
+          var deckSize = Application.cleanArray(mainDeck).length;
+
           if (Comparator.isMatch($scope.selectedCards)) {
             $scope.points += ScoresFactory.score(currentTime);
-            deckSize() >= 3 ? replaceCards() : removeFromTable();
+            deckSize >= 3 ? replaceCards() : removeFromTable();
           }
           deselectCards();
           $scope.isDisabled = false;
@@ -83,31 +85,9 @@ angular.module('starter.controllers')
       currentTime = args.millis;
     });
 
-    millisToMinutesAndSeconds = function(millis) {
-      var minutes = Math.floor(millis / 60000);
-      var seconds = ((millis % 60000) / 1000).toFixed(0);
-      return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-    }
-
-    minutesAndSecondsToMillis = function(minAndSec) {
-      var time = minAndSec.split(":");
-      var minutes = time[0];
-      var seconds = time[1];
-      return parseInt(minutes) * 60000 + parseInt(seconds) * 1000;
-    }
-
-    deckSize = function() {
-      return mainDeck.filter(function(value) { return value !== null }).length;
-    };
-
-    randomNumber = function() {
-      return Math.floor(Math.random() * mainDeck.length);
-    };
-
     getCard = function() {
-      random = randomNumber();
-      card = mainDeck[random] || getCard();
-      return card;
+      var index = Application.randomIndex(mainDeck);
+      return card = mainDeck[index] || getCard();
     };
 
     removeFromDeck = function(card) {
@@ -115,12 +95,8 @@ angular.module('starter.controllers')
       mainDeck[index] = null;
     };
 
-    visibleDeck = function(deck) {
-      deck.forEach(function(card) {
-        if (!card.visible) deck.splice(card, 1);
-      });
-
-      return deck;
+    visibleDeck = function(array) {
+      return array.filter(function(n){ return n.visible });
     }
 
     removeFromTable = function() {
@@ -128,24 +104,15 @@ angular.module('starter.controllers')
         card.visible = false;
       });
 
-      var flatDeck = flattenArray($scope.tableDeck);
+      var flatDeck = Application.flattenArray($scope.tableDeck);
       var visibleCards = visibleDeck(flatDeck);
 
-      if ($scope.tableDeck.length <= 0 || !Comparator.anyMatch(visibleCards)) {
+      if (!Comparator.anyMatch(visibleCards)) {
         $timeout(function(){
+          $scope.tableDeck = []
           Modal.open($scope, 'end-game');
           finalScore();
         }, 1500)
-      }
-    };
-
-    cardIndeces = function(matrix, item) {
-      for (var i = 0; i < matrix.length; i++) {
-        for (var j = 0; j < matrix[i].length; j++) {
-          if (angular.equals(item, matrix[i][j])) {
-            return { row: i, col: j };
-          }
-        }
       }
     };
 
@@ -155,11 +122,11 @@ angular.module('starter.controllers')
 
       if ($scope.points > storedRecord) {
         window.localStorage['record'] = $scope.points;
-        window.localStorage['time'] = millisToMinutesAndSeconds(currentTime);
+        window.localStorage['time'] = Time.millisToMinutesAndSeconds(currentTime);
       }
       if ($scope.points >= storedRecord &&
-        currentTime < minutesAndSecondsToMillis(storedTime)) {
-        window.localStorage['time'] = millisToMinutesAndSeconds(currentTime);
+        currentTime < Time.minutesAndSecondsToMillis(storedTime)) {
+        window.localStorage['time'] = Time.millisToMinutesAndSeconds(currentTime);
       }
     };
 
@@ -191,7 +158,7 @@ angular.module('starter.controllers')
     };
 
     checkMatches = function(){
-      var flatDeck = flattenArray($scope.tableDeck);
+      var flatDeck = Application.flattenArray($scope.tableDeck);
 
       if (!Comparator.anyMatch(flatDeck)) {
         Modal.open($scope, 'unlock-game');
@@ -200,9 +167,9 @@ angular.module('starter.controllers')
 
     replaceCards = function () {
       $scope.selectedCards.forEach(function(selectedCard) {
-        var indeces = cardIndeces($scope.tableDeck, selectedCard);
+        var index = Application.matrixIndex($scope.tableDeck, selectedCard);
         var newCard = getCard();
-        $scope.tableDeck[indeces['row']][indeces.col] = newCard;
+        $scope.tableDeck[index.row][index.col] = newCard;
         removeFromDeck(newCard);
       });
 
@@ -245,10 +212,6 @@ angular.module('starter.controllers')
       } else {
         return 40;
       }
-    };
-
-    flattenArray = function(matrix){
-      return Array.prototype.concat.apply([], matrix);
     };
 
   })
