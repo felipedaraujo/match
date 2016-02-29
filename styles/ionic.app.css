@@ -9727,6 +9727,8 @@ a.button {
 
 .button {
   font-size: 20px; }
+  .button.disabled {
+    opacity: 0.7; }
 
 .padding {
   padding: 0 10px; }
@@ -9745,7 +9747,9 @@ button.button-icon.round-button {
   color: white;
   transition: all linear 220ms;
   transform: translate3d(0, 0, 0);
-  backface-visibility: hidden; }
+  backface-visibility: hidden;
+  font-size: 16px;
+  font-weight: bold; }
   button.button-icon.round-button.assertive {
     background-color: #EF476F;
     color: white; }
