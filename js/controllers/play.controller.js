@@ -2,6 +2,10 @@ angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
     Alert, Application, Comparator, Modal, Time, DeckFactory, ScoresFactory) {
 
+    var admobid = {
+      interstitial: 'ca-app-pub-3310378446527576/2274303314',
+    };
+
     var mainDeck = [];
     var currentTime = null;
 
@@ -56,6 +60,9 @@ angular.module('starter.controllers')
       Modal.close();
 
       var reload = $state.current.name == state ? true : false;
+
+      if(AdMob && !reload) AdMob.showInterstitial();
+
       $state.go(state, {}, {reload: reload});
     };
 

@@ -1,5 +1,6 @@
 angular.module('starter.services')
   .service('Alert', function($window) {
+
     this.leaveGame = function(){
       swal({
         title: "Quit game?",
@@ -7,6 +8,8 @@ angular.module('starter.services')
         showCancelButton: true
       }, function() {
         $window.location.href = '#/home';
+        if(AdMob) AdMob.showInterstitial();
       });
     }
-  })
+
+  });
