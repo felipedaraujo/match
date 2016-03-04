@@ -29,6 +29,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.
       state('home', {
+        cache: false,
         url: '/home',
         templateUrl: 'templates/home.html',
         controller: 'HomeCtrl'

@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
-    Alert, Application, Comparator, Modal, Time, DeckFactory, ScoresFactory) {
+    Alert, Application, Audio, Comparator, Modal, Time, DeckFactory, ScoresFactory) {
 
     var admobid = {
       interstitial: 'ca-app-pub-3310378446527576/2274303314',
@@ -17,6 +17,7 @@ angular.module('starter.controllers')
     $scope.init = function() {
       mainDeck = DeckFactory.setDeck();
       setTableDeck();
+      Audio.play('start-game')
     };
 
     angular.element(document).ready(function () {
@@ -30,7 +31,9 @@ angular.module('starter.controllers')
 
     $scope.toggleCard = function(card){
       if ($scope.selectedCards.length < 3 && wasSelected(card)) {
-        selectCard(card)
+        selectCard(card);
+
+        Audio.play('card-selection-' + $scope.selectedCards.length);
       } else {
         deselectCard(card);
       }
@@ -54,6 +57,7 @@ angular.module('starter.controllers')
 
     $scope.leaveGame = function() {
       Alert.leaveGame();
+      Audio.play('leave-game-x');
     };
 
     $scope.changeState = function(state) {
@@ -61,7 +65,10 @@ angular.module('starter.controllers')
 
       var reload = $state.current.name == state ? true : false;
 
-      if(AdMob && !reload) AdMob.showInterstitial();
+      if (!reload) {
+        Audio.play('quit-game-ok');
+        if(AdMob) AdMob.showInterstitial();
+      }
 
       $state.go(state, {}, {reload: reload});
     };
@@ -80,6 +87,9 @@ angular.module('starter.controllers')
           if (Comparator.isMatch($scope.selectedCards)) {
             $scope.points += ScoresFactory.score(currentTime);
             deckSize >= 3 ? replaceCards() : removeFromTable();
+            Audio.play('right-set');
+          } else {
+            Audio.play('wrong-set');
           }
           deselectCards();
           $scope.isDisabled = false;
@@ -117,7 +127,11 @@ angular.module('starter.controllers')
       if (!Comparator.anyMatch(visibleCards)) {
         $timeout(function(){
           $scope.tableDeck = []
+
+          Audio.play('win');
+
           Modal.open($scope, 'end-game');
+
           finalScore();
         }, 1500)
       }
@@ -147,6 +161,8 @@ angular.module('starter.controllers')
 
       card.shadow = 'default';
       $scope.selectedCards.splice(index, 1);
+
+      Audio.play('deselect');
     };
 
     deselectCards = function(){
