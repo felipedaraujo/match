@@ -1,10 +1,10 @@
 <ion-pane>
-  <ion-content class="padding has-header" scroll="false">
+  <ion-content class="padding has-header" scroll="false" ng-init="init()">
     <h1 class="text-center main-title">TRES!</h1>
     <div class="top-35">
-      <a href="#/play" class="button button-balanced button-block">Play</a>
-      <a href="#/scores" class="button button-positive button-block">Scores</a>
-      <a href="#/how-to-play/1" class="button button-positive button-block">How to play</a>
+      <a ng-click="go('/play')" class="button button-balanced button-block">Play</a>
+      <a ng-click="go('/scores')" class="button button-positive button-block">Scores</a>
+      <a ng-click="go('/how-to-play/1')" class="button button-positive button-block">How to play</a>
 
       <div class="row">
         <div class="col text-right">
