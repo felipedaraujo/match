@@ -4,11 +4,16 @@ angular.module('starter.services')
     var medias = [];
 
     this.play = function(track) {
-      MediaFactory.loadMedia('audio/' + track + '.mp3')
-        .then(function(media){
-          medias[track] = media;
-          medias[track].play();
-        });
+
+      if(medias[track]) {
+        medias[track].play();
+      } else {
+        MediaFactory.loadMedia('audio/' + track + '.mp3')
+          .then(function(media){
+            medias[track] = media;
+            medias[track].play();
+          });
+      }
     };
 
     this.stop = function(track) {

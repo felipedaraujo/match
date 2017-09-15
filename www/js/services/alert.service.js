@@ -1,6 +1,7 @@
 angular.module('starter.services')
   .service('Alert', function($window, Audio) {
 
+
     this.leaveGame = function(){
       swal({
         title: "Quit game?",
@@ -9,9 +10,10 @@ angular.module('starter.services')
       }, function() {
         $window.location.href = '#/home';
 
-        Audio.play('quit-game-ok')
+        var soundOn = window.localStorage['sound'] == "On" ? true : false;
+        if(soundOn) Audio.play('quit-game-ok')
 
-        if(AdMob) AdMob.showInterstitial();
+        if(window.AdMob) AdMob.showInterstitial();
       });
     }
   });

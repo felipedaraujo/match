@@ -2,14 +2,16 @@ angular.module('starter.controllers').
   controller('HomeCtrl', function($cordovaSocialSharing, $ionicPlatform, $location,
     $scope, $timeout, Audio) {
 
+    var soundOn = window.localStorage['sound'] == "On" ? true : false;
+
     $scope.init = function() {
       $ionicPlatform.ready(function() {
-        Audio.play('main-menu-loop');
+        if(soundOn) Audio.play('main-menu-loop');
       });
     };
 
     $scope.go = function(path) {
-      Audio.stop('main-menu-loop');
+      if(soundOn) Audio.stop('main-menu-loop');
       $location.path(path);
     };
 

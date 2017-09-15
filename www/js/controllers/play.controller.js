@@ -2,6 +2,8 @@ angular.module('starter.controllers')
   .controller('PlayCtrl', function($scope, $state, $timeout, $cordovaSocialSharing,
     Alert, Application, Audio, Comparator, Modal, Time, DeckFactory, ScoresFactory) {
 
+    var soundOn = window.localStorage['sound'] == "On" ? true : false;
+
     var admobid = {
       interstitial: 'ca-app-pub-3310378446527576/2274303314',
     };
@@ -10,14 +12,13 @@ angular.module('starter.controllers')
     var currentTime = null;
 
     $scope.selectedCards = [];
-    $scope.tableDeck = [];
-    $scope.points = 0;
+  $scope.points = 0;
     $scope.isDisabled = false;
 
     $scope.init = function() {
       mainDeck = DeckFactory.setDeck();
       setTableDeck();
-      Audio.play('start-game')
+      if(soundOn) Audio.play('start-game');
     };
 
     angular.element(document).ready(function () {
@@ -33,7 +34,7 @@ angular.module('starter.controllers')
       if ($scope.selectedCards.length < 3 && wasSelected(card)) {
         selectCard(card);
 
-        Audio.play('card-selection-' + $scope.selectedCards.length);
+        if(soundOn) Audio.play('card-selection-' + $scope.selectedCards.length);
       } else {
         deselectCard(card);
       }
@@ -57,7 +58,7 @@ angular.module('starter.controllers')
 
     $scope.leaveGame = function() {
       Alert.leaveGame();
-      Audio.play('leave-game-x');
+      if(soundOn) Audio.play('leave-game-x');
     };
 
     $scope.changeState = function(state) {
@@ -66,8 +67,8 @@ angular.module('starter.controllers')
       var reload = $state.current.name == state ? true : false;
 
       if (!reload) {
-        Audio.play('quit-game-ok');
-        if(AdMob) AdMob.showInterstitial();
+        if(soundOn) Audio.play('quit-game-ok');
+        if(window.AdMob) AdMob.showInterstitial();
       }
 
       $state.go(state, {}, {reload: reload});
@@ -87,9 +88,9 @@ angular.module('starter.controllers')
           if (Comparator.isMatch($scope.selectedCards)) {
             $scope.points += ScoresFactory.score(currentTime);
             deckSize >= 3 ? replaceCards() : removeFromTable();
-            Audio.play('right-set');
+            if(soundOn) Audio.play('right-set');
           } else {
-            Audio.play('wrong-set');
+            if(soundOn) Audio.play('wrong-set');
           }
           deselectCards();
           $scope.isDisabled = false;
@@ -126,9 +127,7 @@ angular.module('starter.controllers')
 
       if (!Comparator.anyMatch(visibleCards)) {
         $timeout(function(){
-          $scope.tableDeck = []
-
-          Audio.play('win');
+          if(soundOn) Audio.play('win');
 
           Modal.open($scope, 'end-game');
 
@@ -162,7 +161,7 @@ angular.module('starter.controllers')
       card.shadow = 'default';
       $scope.selectedCards.splice(index, 1);
 
-      Audio.play('deselect');
+      if(soundOn) Audio.play('deselect');
     };
 
     deselectCards = function(){
@@ -203,6 +202,8 @@ angular.module('starter.controllers')
       var row, card;
       var card;
       var maxRows = window.localStorage['level'] == 'Hard' ? 4 : 3;
+
+      $scope.tableDeck = []
 
       while($scope.tableDeck.length < maxRows) {
         $scope.tableDeck.push([]);

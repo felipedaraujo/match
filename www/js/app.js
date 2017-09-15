@@ -12,6 +12,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
         interstitial: 'ca-app-pub-3310378446527576/2274303314',
       };
 
+      window.localStorage['level'] = window.localStorage['level'] || "Easy";
+      window.localStorage['sound'] = window.localStorage['sound'] || "On";
+
       if(window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
